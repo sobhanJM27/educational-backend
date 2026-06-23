@@ -1,17 +1,17 @@
 const mongoose = require('mongoose');
 
 const SpotPlayerSchema = new mongoose.Schema({
-    user: { type: mongoose.Types.ObjectId, default: "" },
-    spotPlayer: {
-        type: Array,
-        default: []
-    },
-    idSP: { type: String, default: '' },
-    authority: { type: String, default: '' }
-})
+  user: { type: mongoose.Types.ObjectId, default: '' },
+  spotPlayer: {
+    type: Array,
+    default: [],
+  },
+  idSP: { type: String, default: '' },
+  authority: { type: String, default: '' },
+});
 
-const model = mongoose.model("spotplayer", SpotPlayerSchema);
+const model = mongoose.model('spotplayer', SpotPlayerSchema);
 
 module.exports = {
-    SpotPlayerModel: model
-}
+  SpotPlayerModel: model,
+};

@@ -103,7 +103,7 @@
  *                  images:
  *                      type: array
  *                      items:
- *                          type: string            
+ *                          type: string
  */
 
 /**
@@ -116,8 +116,8 @@
  *                  id:
  *                      type: string
  *                  sortByNumber:
- *                      type: number    
-*/
+ *                      type: number
+ */
 /**
  * @swagger
  *  components:
@@ -128,8 +128,8 @@
  *                  id:
  *                      type: string
  *                  categoryCourse:
- *                      type: string    
-*/
+ *                      type: string
+ */
 
 /**
  * @swagger
@@ -143,7 +143,7 @@
  *                  application/x-www-form-urlencoded:
  *                      schema:
  *                          $ref: '#/components/schemas/Course'
- *          
+ *
  *          responses:
  *              201:
  *                  description: created new course
@@ -151,7 +151,7 @@
  *                      application/json:
  *                          schema:
  *                              $ref: '#/definitions/publicDefinition'
- * 
+ *
  */
 /**
  * @swagger
@@ -171,7 +171,7 @@
  *                  application/x-www-form-urlencoded:
  *                      schema:
  *                          $ref: '#/components/schemas/Edit-Course'
- *          
+ *
  *          responses:
  *              200:
  *                  description: updated Course
@@ -212,7 +212,7 @@
  *                  application/x-www-form-urlencoded:
  *                      schema:
  *                          $ref: '#/components/schemas/Sort-Course'
- *          
+ *
  *          responses:
  *              200:
  *                  description: updated Course
@@ -233,7 +233,7 @@
  *                  application/x-www-form-urlencoded:
  *                      schema:
  *                          $ref: '#/components/schemas/Category-Course'
- *          
+ *
  *          responses:
  *              200:
  *                  description: updated Course
@@ -242,4 +242,3 @@
  *                          schema:
  *                              $ref: '#/definitions/publicDefinition'
  */
-

@@ -1,5 +1,5 @@
-const Controller = require("../controller");
-const { SitemapModel } = require("../../../model/sitemap.model");
+const Controller = require('../controller');
+const { SitemapModel } = require('../../../model/sitemap.model');
 
 class SitemapController extends Controller {
   async generate(req, res, next) {
@@ -22,8 +22,7 @@ class SitemapController extends Controller {
 
       xml += `</urlset>`;
 
-      res.header("Content-Type", "application/xml");
-      res.set("Content-Type", "application/xml");
+      res.header('Content-Type', 'application/xml');
       res.send(xml);
     } catch (error) {
       next(error);

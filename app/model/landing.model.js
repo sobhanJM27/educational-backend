@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const LandingSchema = new mongoose.Schema({
   title: { type: String, required: true },
@@ -18,8 +18,8 @@ const LandingSchema = new mongoose.Schema({
   courseText3: { type: String, required: true },
   courseId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "course",
-    default: "",
+    ref: 'course',
+    default: '',
     required: true,
   },
   coursePrice: { type: Number, required: true },
@@ -36,5 +36,5 @@ const LandingSchema = new mongoose.Schema({
 });
 
 module.exports = {
-  LandingModel: mongoose.model("Landing", LandingSchema),
+  LandingModel: mongoose.model('Landing', LandingSchema),
 };

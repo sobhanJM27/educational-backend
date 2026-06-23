@@ -1,11 +1,11 @@
-const { StatusCodes: HttpStatus } = require("http-status-codes");
-const { LandingModel } = require("../../../model/landing.model");
+const { StatusCodes: HttpStatus } = require('http-status-codes');
+const { LandingModel } = require('../../../model/landing.model');
 
 class LandingController {
   async getAllLandingSections(req, res, next) {
     try {
-      const sections = await LandingModel.find({})
-        
+      const sections = await LandingModel.find({});
+
       return res.status(HttpStatus.OK).json({
         statusCode: HttpStatus.OK,
         data: sections,
@@ -14,7 +14,6 @@ class LandingController {
       next(error);
     }
   }
-
 }
 
 module.exports = {

@@ -1,9 +1,11 @@
-const createError = require("http-errors");
-const swaggerUi = require("swagger-ui-express");
-const swaggerDocJs = require("swagger-jsdoc");
-const { AllRoutes } = require("./router/router.routes");
-const cors = require("cors");
-const express = require("express");
+const createError = require('http-errors');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocJs = require('swagger-jsdoc');
+const { AllRoutes } = require('./router/router.routes');
+const cors = require('cors');
+const express = require('express');
+const { SitemapRouter } = require('./router/api/sitemap.router');
+
 module.exports = class Server {
   #app = express();
   constructor(PORT) {
@@ -14,33 +16,33 @@ module.exports = class Server {
     this.errorHandling();
   }
   configApplications(PORT) {
-    const morgan = require("morgan");
-    const path = require("path");
-    this.#app.use(morgan("dev"));
+    const morgan = require('morgan');
+    const path = require('path');
+    this.#app.use(morgan('dev'));
     this.#app.use(cors());
     this.#app.use(
       express.urlencoded({
         extended: true,
-        limit: "20mb",
+        limit: '20mb',
       }),
     );
 
     this.#app.use(
       express.json({
-        limit: "20mb",
+        limit: '20mb',
       }),
     );
-    this.#app.use(express.static(path.join(__dirname, "..", "public")));
+    this.#app.use(express.static(path.join(__dirname, '..', 'public')));
     this.#app.use(
-      "/api-doc",
+      '/api-doc',
       swaggerUi.serve,
       swaggerUi.setup(
         swaggerDocJs({
           swaggerDefinition: {
-            openapi: "3.0.0",
+            openapi: '3.0.0',
             info: {
-              title: "سایت آموزشی",
-              version: "1.0.0",
+              title: 'سایت آموزشی',
+              version: '1.0.0',
             },
             servers: [
               {
@@ -50,45 +52,45 @@ module.exports = class Server {
             components: {
               securitySchemes: {
                 BearerAuth: {
-                  type: "http",
-                  scheme: "bearer",
-                  bearerFormat: "JWT",
+                  type: 'http',
+                  scheme: 'bearer',
+                  bearerFormat: 'JWT',
                 },
               },
             },
             security: [{ BearerAuth: [] }],
           },
-          apis: ["./app/router/**/*.js"],
+          apis: ['./app/router/**/*.js'],
         }),
         { explorer: true },
       ),
     );
   }
   createServer(PORT) {
-    this.#app.listen(PORT, () => console.log("Server is Running"));
+    this.#app.listen(PORT, () => console.log('Server is Running'));
     this.#app.use(
       cors({
-        origin: "*",
+        origin: '*',
       }),
     );
   }
   async configDataBase() {
-    const mongoose = require("mongoose");
-    mongoose.set("strictQuery", true);
+    const mongoose = require('mongoose');
+    mongoose.set('strictQuery', true);
     mongoose
       .connect(process.env.DATABASE_URL, {
-        authSource: "admin",
+        authSource: 'admin',
       })
-      .then(console.log("connect"))
+      .then(console.log('connect'))
       .catch((e) => console.log(e));
-    process.on("SIGBREAK", async () => {
+    process.on('SIGBREAK', async () => {
       await connection.close();
       process.exit(0);
     });
   }
   errorHandling() {
     this.#app.use((req, res, next) => {
-      next(createError.NotFound("صفحه ی مورد نظر پدا نشد"));
+      next(createError.NotFound('صفحه ی مورد نظر پدا نشد'));
     });
     // this.#app.use((req, res, next, error) => {
     //   const serverError = createError.InternalServerError();
@@ -112,6 +114,8 @@ module.exports = class Server {
     });
   }
   createRouter() {
+    this.#app.use('/sitemap.xml', SitemapRouter);
+
     this.#app.use(AllRoutes);
   }
 };

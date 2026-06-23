@@ -76,8 +76,8 @@
  *                  images:
  *                      type: array
  *                      items:
- *                          type: string            
-*/
+ *                          type: string
+ */
 /**
  * @swagger
  *  components:
@@ -88,8 +88,8 @@
  *                  id:
  *                      type: string
  *                  sortByNumber:
- *                      type: number    
-*/
+ *                      type: number
+ */
 /**
  * @swagger
  *  components:
@@ -100,8 +100,8 @@
  *                  id:
  *                      type: string
  *                  categoryBlog:
- *                      type: string    
-*/
+ *                      type: string
+ */
 /**
  * @swagger
  *  /admin/blog/add:
@@ -117,7 +117,7 @@
  *
  *          responses:
  *              201:
- *                  description: created new Book    
+ *                  description: created new Book
  */
 /**
  * @swagger
@@ -156,7 +156,7 @@
  *                  application/x-www-form-urlencoded:
  *                      schema:
  *                          $ref: '#/components/schemas/Edit-Blog'
- *          
+ *
  *          responses:
  *              200:
  *                  description: updated Blog
@@ -177,7 +177,7 @@
  *                  application/x-www-form-urlencoded:
  *                      schema:
  *                          $ref: '#/components/schemas/Sort-Blog'
- *          
+ *
  *          responses:
  *              200:
  *                  description: updated Blog
@@ -199,7 +199,7 @@
  *                  application/x-www-form-urlencoded:
  *                      schema:
  *                          $ref: '#/components/schemas/Category-Blog'
- *          
+ *
  *          responses:
  *              200:
  *                  description: updated Blog

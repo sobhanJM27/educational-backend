@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
 const linkSchema = new mongoose.Schema({
-    ip: { type: String }
+  ip: { type: String },
 });
 
-const model = mongoose.model("link", linkSchema)
+const model = mongoose.model('link', linkSchema);
 
 module.exports = {
-    linkModel: model
-}
+  linkModel: model,
+};

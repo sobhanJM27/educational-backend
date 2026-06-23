@@ -26,7 +26,7 @@
  *                  application/x-www-form-urlencoded:
  *                      schema:
  *                          $ref: '#/components/schemas/Slider'
- *          
+ *
  *          responses:
  *              201:
  *                  description: created new slider
@@ -34,7 +34,7 @@
  *                      application/json:
  *                          schema:
  *                              $ref: '#/definitions/publicDefinition'
- * 
+ *
  */
 
 /**

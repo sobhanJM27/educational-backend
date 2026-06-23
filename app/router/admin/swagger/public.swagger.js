@@ -4,7 +4,7 @@
  *      publicDefinition:
  *          type: object
  *          properties:
- *              statusCode:                 
+ *              statusCode:
  *                  type: integer
  *                  example: 20X
  *              data:

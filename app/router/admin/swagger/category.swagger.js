@@ -73,6 +73,6 @@
  *          responses:
  *              200:
  *                  description: success
- *              500:    
+ *              500:
  *                  description: internalServerErorr
  */

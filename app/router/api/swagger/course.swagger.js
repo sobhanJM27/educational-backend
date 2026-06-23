@@ -35,7 +35,7 @@
  *  /api/courses/getCourseFanbayan:
  *      get:
  *          tags: [Course(AdminPanel)]
- *          summary: get getCourseFanbayan 
+ *          summary: get getCourseFanbayan
  *          responses:
  *              200:
  *                  description: success
@@ -45,7 +45,7 @@
  *  /api/courses/getCoursePersonalDevelopment:
  *      get:
  *          tags: [Course(AdminPanel)]
- *          summary: get getCoursePersonalDevelopment 
+ *          summary: get getCoursePersonalDevelopment
  *          responses:
  *              200:
  *                  description: success

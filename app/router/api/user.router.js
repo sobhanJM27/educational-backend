@@ -4,19 +4,31 @@ const { checkRole } = require('../../module/function');
 
 const router = require('express').Router();
 
-router.get("/getUser", verifyJWT, UserController.getProfileUSer);
+router.get('/getUser', verifyJWT, UserController.getProfileUSer);
 
-router.patch("/editUser", verifyJWT, UserController.editProfileUser);
+router.patch('/editUser', verifyJWT, UserController.editProfileUser);
 
-router.get("/getVideOnline/:limit", verifyJWT, UserController.getEducationalVideoPurchasedOnline);
+router.get(
+  '/getVideOnline/:limit',
+  verifyJWT,
+  UserController.getEducationalVideoPurchasedOnline,
+);
 
-router.get("/getVideOffline/:limit", verifyJWT, UserController.getEducationalVideoPurchasedOfline)
+router.get(
+  '/getVideOffline/:limit',
+  verifyJWT,
+  UserController.getEducationalVideoPurchasedOfline,
+);
 
-router.get("/getBook/:limit", verifyJWT, UserController.getBooktPurchased);
+router.get('/getBook/:limit', verifyJWT, UserController.getBooktPurchased);
 
-router.get("/getVideInPerson/:limit", verifyJWT, UserController.getEducationalVideoPurchasedInPerson)
-router.get("/list", verifyJWT, UserController.getAllUser)
+router.get(
+  '/getVideInPerson/:limit',
+  verifyJWT,
+  UserController.getEducationalVideoPurchasedInPerson,
+);
+router.get('/list', verifyJWT, UserController.getAllUser);
 
 module.exports = {
-    userRouter: router
-}
+  userRouter: router,
+};

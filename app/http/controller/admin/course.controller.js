@@ -1,11 +1,11 @@
-const Controller = require("../controller");
-const { createCourseSchema } = require("../../validators/admin/course.schema");
-const createError = require("http-errors");
-const { CouresModel } = require("../../../model/course.model");
-const { StatusCodes: HttpStatus } = require("http-status-codes");
-const { CategoryModel } = require("../../../model/categories.model");
-const { ObjectIdValidator } = require("../../validators/public.schema");
-const { copyObject } = require("../../../module/function");
+const Controller = require('../controller');
+const { createCourseSchema } = require('../../validators/admin/course.schema');
+const createError = require('http-errors');
+const { CouresModel } = require('../../../model/course.model');
+const { StatusCodes: HttpStatus } = require('http-status-codes');
+const { CategoryModel } = require('../../../model/categories.model');
+const { ObjectIdValidator } = require('../../validators/public.schema');
+const { copyObject } = require('../../../module/function');
 
 class CourseController extends Controller {
   async addCoure(req, res, next) {
@@ -27,26 +27,26 @@ class CourseController extends Controller {
         images,
         spotPlayerID,
         subCourse,
-        score
+        score,
       } = coursebody;
-      const courses = await CouresModel.find({})
+      const courses = await CouresModel.find({});
       if (courses.score == score)
-        throw createError.Conflict("این ردیف قبلا اعمال شده است")
-      price = +price
-      discount = +discount
-      const originimage = images.map(e => e.slice(33, e.length))
+        throw createError.Conflict('این ردیف قبلا اعمال شده است');
+      price = +price;
+      discount = +discount;
+      const originimage = images.map((e) => e.slice(33, e.length));
       if (discount > 0 && discount != 0) {
         const add = (discount * price) / 100;
         finalPrice = price - add;
-        finalPrice = Math.floor(finalPrice / 10000) * 10000 + 990000
+        finalPrice = Math.floor(finalPrice / 10000) * 10000 + 990000;
       } else {
         finalPrice = price;
-        finalPrice = Math.floor(finalPrice / 10000) * 10000
+        finalPrice = Math.floor(finalPrice / 10000) * 10000;
       }
       const findCategory = await CategoryModel.findOne({ category });
       // console.log(findCategory);
       if (!findCategory)
-        throw createError.NotFound("ایدی ارسال شده دسته بندی اشتباه میباشد");
+        throw createError.NotFound('ایدی ارسال شده دسته بندی اشتباه میباشد');
       const course = await CouresModel.create({
         title,
         urlTitle,
@@ -61,12 +61,12 @@ class CourseController extends Controller {
         level,
         images: originimage,
         spotPlayerID,
-        subCourse: subCourse[0].trim() === '' ? [] : subCourse
+        subCourse: subCourse[0].trim() === '' ? [] : subCourse,
       });
-      if (!course) throw createError.InternalServerError("دوره ثبت نشد");
+      if (!course) throw createError.InternalServerError('دوره ثبت نشد');
       return res.status(HttpStatus.CREATED).json({
         statusCode: HttpStatus.CREATED,
-        message: "ثبت دوره موفقیت امیز بود"
+        message: 'ثبت دوره موفقیت امیز بود',
       });
     } catch (error) {
       next(error);
@@ -74,38 +74,39 @@ class CourseController extends Controller {
   }
   async editCourse(req, res, next) {
     try {
-
       let data = await createCourseSchema.validateAsync(req.body);
       const { id } = req.params;
-      const courses = await CouresModel.find({})
+      const courses = await CouresModel.find({});
       if (courses.score == data.score)
-        throw createError.Conflict("این ردیف قبلا اعمال شده است")
+        throw createError.Conflict('این ردیف قبلا اعمال شده است');
       const course = await this.findCourseById(id);
-      const findCategory = await CategoryModel.findOne({ category: data.category });
+      const findCategory = await CategoryModel.findOne({
+        category: data.category,
+      });
       if (!findCategory)
-        throw createError.NotFound("ایدی ارسال شده دسته بندی اشتباه میباشد");
+        throw createError.NotFound('ایدی ارسال شده دسته بندی اشتباه میباشد');
       if (data.price) {
         let finalPrice = 0;
         if (data.discount != 0 && data.discount > 0) {
           const add = (data.price * data.discount) / 100;
           finalPrice = data.price - add;
-          finalPrice = (Math.floor(finalPrice / 100000) * 100000) + 890000
+          finalPrice = Math.floor(finalPrice / 100000) * 100000 + 890000;
         } else {
           finalPrice = data.price;
-          finalPrice = Math.floor(finalPrice / 10000) * 10000
+          finalPrice = Math.floor(finalPrice / 10000) * 10000;
         }
         data.finalPrice = finalPrice;
       }
-      data.subCourse = data.subCourse[0].trim() === '' ? [] : data.subCourse
+      data.subCourse = data.subCourse[0].trim() === '' ? [] : data.subCourse;
       const editCourseResult = await CouresModel.updateOne(
         { _id: course._id },
-        { $set: data }
+        { $set: data },
       );
       if (editCourseResult.modifiedCount == 0)
-        throw createError.InternalServerError("خطای داخلی");
+        throw createError.InternalServerError('خطای داخلی');
       return res.status(HttpStatus.OK).json({
         statusCode: HttpStatus.OK,
-        message: "اپدیت دوره با موفقیت انجام شد",
+        message: 'اپدیت دوره با موفقیت انجام شد',
       });
     } catch (error) {
       next(error);
@@ -117,10 +118,10 @@ class CourseController extends Controller {
       const course = await this.findCourseById(id);
       const result = await CouresModel.deleteOne({ _id: course._id });
       if (result.deletedCount == 0)
-        throw createError.InternalServerError("حذف انجام نشد");
+        throw createError.InternalServerError('حذف انجام نشد');
       return res.status(HttpStatus.OK).json({
         statusCode: HttpStatus.OK,
-        message: "خذف دوره با موفقیت انجام شد",
+        message: 'خذف دوره با موفقیت انجام شد',
       });
     } catch (error) {
       next(error);
@@ -129,33 +130,43 @@ class CourseController extends Controller {
   async findCourseById(courseID) {
     const { id } = await ObjectIdValidator.validateAsync({ id: courseID });
     const course = await CouresModel.findById(id);
-    if (!course) throw createError.NotFound("دوره ای یافت نشد");
+    if (!course) throw createError.NotFound('دوره ای یافت نشد');
     return course;
   }
   async sortBlog(req, res, next) {
     try {
       const { id, sortByNumber } = req.body;
-      const result = await CouresModel.updateOne({ _id: id }, { $set: { sortByNumber: +sortByNumber } })
-      if (!result) throw createError.InternalServerError("عدد برای  مرتب کردن اضافه نشد")
+      const result = await CouresModel.updateOne(
+        { _id: id },
+        { $set: { sortByNumber: +sortByNumber } },
+      );
+      if (!result)
+        throw createError.InternalServerError('عدد برای  مرتب کردن اضافه نشد');
       return res.status(HttpStatus.OK).json({
         statusCode: HttpStatus.OK,
-        message: "با موفقیت اضافه شد"
-      })
+        message: 'با موفقیت اضافه شد',
+      });
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
   async categoryCourse(req, res, next) {
     try {
       const { id, categoryCourse } = req.body;
-      const result = await CouresModel.updateOne({ _id: id }, { $set: { categoryCourse: categoryCourse } })
-      if (!result) throw createError.InternalServerError("کتگوری برای  مرتب کردن اضافه نشد")
+      const result = await CouresModel.updateOne(
+        { _id: id },
+        { $set: { categoryCourse: categoryCourse } },
+      );
+      if (!result)
+        throw createError.InternalServerError(
+          'کتگوری برای  مرتب کردن اضافه نشد',
+        );
       return res.status(HttpStatus.OK).json({
         statusCode: HttpStatus.OK,
-        message: "با موفقیت اضافه شد"
-      })
+        message: 'با موفقیت اضافه شد',
+      });
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
 }

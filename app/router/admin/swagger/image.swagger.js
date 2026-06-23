@@ -26,7 +26,7 @@
  *                  multipart/form-data:
  *                      schema:
  *                          $ref: '#/components/schemas/Image'
- *          
+ *
  *          responses:
  *              201:
  *                  description: created new image
@@ -34,7 +34,7 @@
  *                      application/json:
  *                          schema:
  *                              $ref: '#/definitions/publicDefinition'
- * 
+ *
  */
 
 /**
@@ -55,7 +55,7 @@
  *                  multipart/form-data:
  *                      schema:
  *                          $ref: '#/components/schemas/Image'
- *          
+ *
  *          responses:
  *              200:
  *                  description: updated Course

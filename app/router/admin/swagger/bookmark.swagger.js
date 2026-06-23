@@ -1,5 +1,3 @@
-
-
 /**
  * @swagger
  *  /admin/bookmark/addordelete/{courseID}:

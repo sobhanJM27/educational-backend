@@ -28,7 +28,7 @@
  *                  application/x-www-form-urlencoded:
  *                      schema:
  *                          $ref: '#/components/schemas/View'
- *          
+ *
  *          responses:
  *              201:
  *                  description: created new course
@@ -36,7 +36,7 @@
  *                      application/json:
  *                          schema:
  *                              $ref: '#/definitions/publicDefinition'
- * 
+ *
  */
 
 /**
@@ -57,7 +57,7 @@
  *                  application/x-www-form-urlencoded:
  *                      schema:
  *                          $ref: '#/components/schemas/View'
- *          
+ *
  *          responses:
  *              200:
  *                  description: updated view
@@ -66,7 +66,6 @@
  *                          schema:
  *                              $ref: '#/definitions/publicDefinition'
  */
-
 
 /**
  * @swagger

@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const SitemapSchema = new mongoose.Schema(
   {
@@ -18,15 +18,15 @@ const SitemapSchema = new mongoose.Schema(
     changefreq: {
       type: String,
       enum: [
-        "always",
-        "hourly",
-        "daily",
-        "weekly",
-        "monthly",
-        "yearly",
-        "never",
+        'always',
+        'hourly',
+        'daily',
+        'weekly',
+        'monthly',
+        'yearly',
+        'never',
       ],
-      default: "daily",
+      default: 'daily',
     },
   },
   {
@@ -35,5 +35,5 @@ const SitemapSchema = new mongoose.Schema(
 );
 
 module.exports = {
-  SitemapModel: mongoose.model("Sitemap", SitemapSchema),
+  SitemapModel: mongoose.model('Sitemap', SitemapSchema),
 };

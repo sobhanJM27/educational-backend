@@ -7,20 +7,20 @@
  *              required:
  *                  -   courseID
  *                  -   chapterID
- *                  -   title       
- *                  -   text     
+ *                  -   title
+ *                  -   text
  *              properties:
  *                  courseID:
  *                      type: string
  *                      example: 62822e4ff68cdded54aa928d
- *                  chapterID: 
+ *                  chapterID:
  *                      type: string
  *                      example: 628dd482330688179ab88203
  *                  title:
  *                      type: string
  *                      description: the title of episode
  *                      example: ویدیو شماره یک - متغیر ها
- *                  text: 
+ *                  text:
  *                      type: string
  *                      description: the describe about this episode
  *                      example: توی این قسمت بطور کامل دررابطه با .... گفته شده
@@ -30,13 +30,13 @@
  *  components:
  *      schemas:
  *          EditEpisode:
- *              type: object    
+ *              type: object
  *              properties:
  *                  title:
  *                      type: string
  *                      description: the title of episode
  *                      example: ویدیو شماره یک - متغیر ها
- *                  text: 
+ *                  text:
  *                      type: string
  *                      description: the describe about this episode
  *                      example: توی این قسمت بطور کامل دررابطه با .... گفته شده
@@ -51,7 +51,7 @@
  *          requestBody:
  *              required: true
  *              content:
- *                  application/x-www-form-urlencoded: 
+ *                  application/x-www-form-urlencoded:
  *                      schema:
  *                          $ref: '#/components/schemas/AddEpisode'
  *          responses:
@@ -59,7 +59,7 @@
  *                  description: success - created
  *                  content:
  *                      application/json:
- *                          schema: 
+ *                          schema:
  *                              $ref: '#/definitions/publicDefinition'
  */
 
@@ -77,7 +77,7 @@
  *          requestBody:
  *              required: true
  *              content:
- *                  application/x-www-form-urlencoded: 
+ *                  application/x-www-form-urlencoded:
  *                      schema:
  *                          $ref: '#/components/schemas/EditEpisode'
  *          responses:
@@ -85,7 +85,7 @@
  *                  description: success - created
  *                  content:
  *                      application/json:
- *                          schema: 
+ *                          schema:
  *                              $ref: '#/definitions/publicDefinition'
  */
 /**
@@ -104,6 +104,6 @@
  *                  description: success
  *                  content:
  *                      application/json:
- *                          schema: 
+ *                          schema:
  *                              $ref: '#/definitions/publicDefinition'
  */

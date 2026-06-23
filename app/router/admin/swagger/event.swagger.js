@@ -40,7 +40,7 @@
  *                  application/x-www-form-urlencoded:
  *                      schema:
  *                          $ref: '#/components/schemas/Event'
- *          
+ *
  *          responses:
  *              201:
  *                  description: created new enent
@@ -48,7 +48,7 @@
  *                      application/json:
  *                          schema:
  *                              $ref: '#/definitions/publicDefinition'
- * 
+ *
  */
 /**
  * @swagger
@@ -67,7 +67,7 @@
  *                  application/x-www-form-urlencoded:
  *                      schema:
  *                          $ref: '#/components/schemas/Event'
- *          
+ *
  *          responses:
  *              200:
  *                  description: created new enent
@@ -75,7 +75,7 @@
  *                      application/json:
  *                          schema:
  *                              $ref: '#/definitions/publicDefinition'
- * 
+ *
  */
 /**
  * @swagger

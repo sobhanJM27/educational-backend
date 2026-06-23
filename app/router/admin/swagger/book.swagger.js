@@ -117,8 +117,8 @@
  *                  images:
  *                      type: array
  *                      items:
- *                          type: string         
-*/
+ *                          type: string
+ */
 
 /**
  * @swagger
@@ -135,7 +135,7 @@
  *
  *          responses:
  *              201:
- *                  description: created new Book    
+ *                  description: created new Book
  */
 
 /**
@@ -176,7 +176,7 @@
  *                  application/x-www-form-urlencoded:
  *                      schema:
  *                          $ref: '#/components/schemas/Edit-Book'
- *          
+ *
  *          responses:
  *              200:
  *                  description: updated Book

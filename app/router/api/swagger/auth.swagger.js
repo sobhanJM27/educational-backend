@@ -38,7 +38,7 @@
  *                      description: the title of blog
  *          refreshToken:
  *              type: object
- *              required:   
+ *              required:
  *                  -   refreshtoken
  *              properties:
  *                  refreshtoken:
@@ -46,7 +46,7 @@
  *                      description: the title of blog
  *          refreshCode:
  *              type: object
- *              required:   
+ *              required:
  *                  -   phone
  *              properties:
  *                  phone:
@@ -69,7 +69,7 @@
  *
  *          responses:
  *              201:
- *                  description: created new Book    
+ *                  description: created new Book
  */
 
 /**
@@ -87,7 +87,7 @@
  *
  *          responses:
  *              201:
- *                  description: created new Book    
+ *                  description: created new Book
  */
 
 /**
@@ -105,11 +105,8 @@
  *
  *          responses:
  *              201:
- *                  description: created new Book    
+ *                  description: created new Book
  */
-
-
-
 
 /**
  * @swagger
@@ -126,7 +123,7 @@
  *
  *          responses:
  *              201:
- *                  description: created new Book    
+ *                  description: created new Book
  */
 
 /**
@@ -134,7 +131,7 @@
  *  /auth/login:
  *      post:
  *          tags: [AuthUser(Auth)]
- *          summary: login user 
+ *          summary: login user
  *          requestBody:
  *              required: true
  *              content:
@@ -144,5 +141,5 @@
  *
  *          responses:
  *              201:
- *                  description: created new Book    
+ *                  description: created new Book
  */

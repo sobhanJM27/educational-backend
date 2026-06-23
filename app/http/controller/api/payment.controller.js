@@ -1,21 +1,21 @@
-const { BookModel } = require("../../../model/book.model");
-const { CouresModel } = require("../../../model/course.model");
-const { SaleModel } = require("../../../model/sale.model");
-const Controller = require("../controller");
-const { default: axios } = require("axios");
+const { BookModel } = require('../../../model/book.model');
+const { CouresModel } = require('../../../model/course.model');
+const { SaleModel } = require('../../../model/sale.model');
+const Controller = require('../controller');
+const { default: axios } = require('axios');
 const {
   invoiceNumberGenerator,
   copyObject,
-} = require("../../../module/function");
-const moment = require("moment-jalaali");
-const { PaymentModel } = require("../../../model/payments");
-const createHttpError = require("http-errors");
-const HttpStatus = require("http-status-codes");
-const { default: mongoose, disconnect } = require("mongoose");
-const { UserModel } = require("../../../model/user.model");
-const { DiscountCodeModel } = require("../../../model/discountCode.model");
-const { SpotPlayerModel } = require("../../../model/spotplayer.model");
-const { SpotPlayerController } = require("./spotplayer.controller");
+} = require('../../../module/function');
+const moment = require('moment-jalaali');
+const { PaymentModel } = require('../../../model/payments');
+const createHttpError = require('http-errors');
+const HttpStatus = require('http-status-codes');
+const { default: mongoose, disconnect } = require('mongoose');
+const { UserModel } = require('../../../model/user.model');
+const { DiscountCodeModel } = require('../../../model/discountCode.model');
+const { SpotPlayerModel } = require('../../../model/spotplayer.model');
+const { SpotPlayerController } = require('./spotplayer.controller');
 
 class PaymentControllerApi extends Controller {
   #user;
@@ -23,8 +23,8 @@ class PaymentControllerApi extends Controller {
   #sale;
   async PaymentGateway(req, res, next) {
     try {
-      console.log("start");
-      console.log("dsf" + process.env.ZARINPAL_MERCHANTID);
+      console.log('start');
+      console.log('dsf' + process.env.ZARINPAL_MERCHANTID);
       const { sendPrice, bascket, provice, city, address, code } = req.body;
       const user = req.user;
       let amount = 0;
@@ -43,7 +43,7 @@ class PaymentControllerApi extends Controller {
             userID: user._id,
           });
         }
-        if (bascket[i].item_type == "book") {
+        if (bascket[i].item_type == 'book') {
           const product = await BookModel.findOne({ _id: bascket[i].id });
           await SaleModel.updateOne(
             { _id: sale._id },
@@ -51,19 +51,19 @@ class PaymentControllerApi extends Controller {
           );
           objectProduct.push({ book_id: product._id, count: 1 });
           amount += product.finalPricePhysical;
-        } else if (bascket[i].item_type == "course") {
+        } else if (bascket[i].item_type == 'course') {
           const product = await CouresModel.findOne({ _id: bascket[i].id });
-          if (product.type == "online")
+          if (product.type == 'online')
             await SaleModel.updateOne(
               { _id: sale._id },
               { $push: { courseIDOnline: product._id } },
             );
-          else if (product.type == "offline")
+          else if (product.type == 'offline')
             await SaleModel.updateOne(
               { _id: sale._id },
               { $push: { courseIDOffline: product._id } },
             );
-          else if (product.type == "inPerson")
+          else if (product.type == 'inPerson')
             await SaleModel.updateOne(
               { _id: sale._id },
               { $push: { courseIDOInPerson: product._id } },
@@ -87,10 +87,10 @@ class PaymentControllerApi extends Controller {
           const authority = invoiceNumberGenerator();
           await PaymentModel.create({
             invoiceNumber: invoiceNumberGenerator(),
-            paymentDate: moment().format("jYYYYjMMjDDHHmmss"),
+            paymentDate: moment().format('jYYYYjMMjDDHHmmss'),
             amount: +this.#amount,
             user: user._id,
-            description: "پرداخت با کد تخفیف",
+            description: 'پرداخت با کد تخفیف',
             authority,
             verify: true,
           });
@@ -115,11 +115,11 @@ class PaymentControllerApi extends Controller {
           }
           const result = await SaleModel.findOne({ authority });
           // console.log(result);
-          if (result.typeItem === "book" && result.typeItem === "course") {
-            if (result.typeItem === "book")
-              await this.forUpdateProducr(result, BookModel, "bookID");
-            if (result.typeItem === "course")
-              await this.forUpdateProducr(result, CouresModel, "courseID");
+          if (result.typeItem === 'book' && result.typeItem === 'course') {
+            if (result.typeItem === 'book')
+              await this.forUpdateProducr(result, BookModel, 'bookID');
+            if (result.typeItem === 'course')
+              await this.forUpdateProducr(result, CouresModel, 'courseID');
           }
           // console.log("success");
           return res.status(HttpStatus.StatusCodes.OK).json({
@@ -142,22 +142,22 @@ class PaymentControllerApi extends Controller {
   }
   async zarinPal(req, res, next) {
     try {
-      console.log("start2");
+      console.log('start2');
       const zarinpal_request_url =
-        "https://payment.zarinpal.com/pg/v4/payment/request.json";
-      const zarinpalGatewayURL = "https://payment.zarinpal.com/pg/StartPay";
-      const description = "بابت خرید دوره یا محصولات";
+        'https://payment.zarinpal.com/pg/v4/payment/request.json';
+      const zarinpalGatewayURL = 'https://payment.zarinpal.com/pg/StartPay';
+      const description = 'بابت خرید دوره یا محصولات';
       const zapripal_options = {
         merchant_id: process.env.ZARINPAL_MERCHANTID,
         amount: +this.#amount,
         description,
         metadata: {
-          email: this.#user?.email || "example@domain.com",
+          email: this.#user?.email || 'example@domain.com',
           mobile: this.#user.phone,
         },
-        callback_url: "https://api.saberzarei.com/api/payment/verify",
+        callback_url: 'https://api.saberzarei.com/api/payment/verify',
       };
-      console.log("request");
+      console.log('request');
       const RequestResult = await axios
         .post(zarinpal_request_url, zapripal_options)
         .then((res) => res.data)
@@ -176,7 +176,7 @@ class PaymentControllerApi extends Controller {
       );
       await PaymentModel.create({
         invoiceNumber: invoiceNumberGenerator(),
-        paymentDate: moment().format("jYYYYjMMjDDHHmmss"),
+        paymentDate: moment().format('jYYYYjMMjDDHHmmss'),
         amount: +this.#amount,
         user: this.#user._id,
         description,
@@ -198,21 +198,21 @@ class PaymentControllerApi extends Controller {
     try {
       const { Authority: authority } = req.query;
       console.log(`verify auth :${authority}`);
-      const verifyURL = "https://api.zarinpal.com/pg/v4/payment/verify.json";
+      const verifyURL = 'https://api.zarinpal.com/pg/v4/payment/verify.json';
       const payment = await PaymentModel.findOne({ authority });
       if (!payment)
-        throw createHttpError.NotFound("تراکنش در انتظار پرداخت یافت نشد");
+        throw createHttpError.NotFound('تراکنش در انتظار پرداخت یافت نشد');
       if (payment.verify)
-        throw createHttpError.BadRequest("تراکنش مورد نظر قبلا پرداخت شده");
+        throw createHttpError.BadRequest('تراکنش مورد نظر قبلا پرداخت شده');
       const verifyBody = JSON.stringify({
         authority,
         amount: payment.amount,
         merchant_id: process.env.ZARINPAL_MERCHANTID,
       });
       const verifyResult = await fetch(verifyURL, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: verifyBody,
       }).then((result) => result.json());
@@ -240,19 +240,19 @@ class PaymentControllerApi extends Controller {
             result._id,
           );
         }
-        if (result.typeItem === "book" && result.typeItem === "course") {
-          if (result.typeItem === "book")
-            await this.forUpdateProducr(result, BookModel, "bookID");
-          if (result.typeItem === "course")
-            await this.forUpdateProducr(result, CouresModel, "courseID");
+        if (result.typeItem === 'book' && result.typeItem === 'course') {
+          if (result.typeItem === 'book')
+            await this.forUpdateProducr(result, BookModel, 'bookID');
+          if (result.typeItem === 'course')
+            await this.forUpdateProducr(result, CouresModel, 'courseID');
         }
         return res.redirect(
           `https://saberzarei.com/Basket/Order?orderId=${authority}`,
         );
       }
-      return res.redirect("https://saberzarei.com/Failed").json({
+      return res.redirect('https://saberzarei.com/Failed').json({
         massage:
-          "پرداخت انجام نشد در صورت کسر وجه طی ۷۲ ساعت به حساب شما بازمیگردد",
+          'پرداخت انجام نشد در صورت کسر وجه طی ۷۲ ساعت به حساب شما بازمیگردد',
       });
     } catch (error) {
       next(error);
@@ -260,14 +260,14 @@ class PaymentControllerApi extends Controller {
   }
   async forUpdateProducr(result, model, property) {
     for (var i = 0; i < result.sale.length; i++) {
-      console.log("models");
-      if (property == "bookID") {
+      console.log('models');
+      if (property == 'bookID') {
         await model.updateOne(
-          { _id: result.sale[i]["bookID"] },
+          { _id: result.sale[i]['bookID'] },
           { $inc: { sale: 1 } },
         );
-      } else if (property == "courseID") {
-        const course = await model.findOne({ _id: result.sale[i]["courseID"] });
+      } else if (property == 'courseID') {
+        const course = await model.findOne({ _id: result.sale[i]['courseID'] });
         if (course.subCourse.length > 0) {
           for (var j = 0; j < course.subCourse.length; j++) {
             await model.updateOne(
@@ -277,7 +277,7 @@ class PaymentControllerApi extends Controller {
           }
         } else {
           await model.updateOne(
-            { _id: result.sale[i]["courseID"] },
+            { _id: result.sale[i]['courseID'] },
             { $inc: { sale: 1 } },
           );
         }
@@ -332,7 +332,7 @@ class PaymentControllerApi extends Controller {
             });
           }
 
-          course["tokenSP"] = tokenSP;
+          course['tokenSP'] = tokenSP;
           temp.push(course);
         }
 
@@ -440,9 +440,9 @@ class PaymentControllerApi extends Controller {
             first_name: user.first_name,
             last_name: user.last_name,
             phone: user.phone,
-            provice: sale[i].provice || "",
-            city: sale[i].city || "",
-            address: sale[i].address || "",
+            provice: sale[i].provice || '',
+            city: sale[i].city || '',
+            address: sale[i].address || '',
           },
           factor: payment.invoiceNumber,
           date: payment.paymentDate,
@@ -461,7 +461,7 @@ class PaymentControllerApi extends Controller {
     try {
       const { id, status, trackingCode } = req.body;
       let sendStatusCode;
-      if (status == "true") sendStatusCode = true;
+      if (status == 'true') sendStatusCode = true;
       else sendStatusCode = false;
       // const username = '09307886969';
       // const password = 'FL2$Q';

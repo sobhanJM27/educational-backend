@@ -1,4 +1,3 @@
-
 /**
  * @swagger
  *  /api/filter/{search}/{query}/{type}:
@@ -28,12 +27,12 @@
  *  /api/filter/search:
  *      get:
  *          tags: [Filter(Api)]
- *          summary: get all 
+ *          summary: get all
  *          parameters:
  *              -   in: query
  *                  name: search
  *                  type: string
- *                  description: text for search in title 
+ *                  description: text for search in title
  *          responses:
  *              200:
  *                  description: success

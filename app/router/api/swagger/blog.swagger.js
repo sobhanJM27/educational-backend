@@ -35,7 +35,7 @@
  *  /api/blog/getOtherArticles:
  *      get:
  *          tags: [Blog(AdminPanel)]
- *          summary: get getOtherArticles 
+ *          summary: get getOtherArticles
  *          responses:
  *              200:
  *                  description: success
@@ -45,7 +45,7 @@
  *  /api/blog/getEducationalArticles:
  *      get:
  *          tags: [Blog(AdminPanel)]
- *          summary: get getEducationalArticles 
+ *          summary: get getEducationalArticles
  *          responses:
  *              200:
  *                  description: success

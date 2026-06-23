@@ -34,5 +34,5 @@
  *
  *          responses:
  *              201:
- *                  description: created new Product    
+ *                  description: created new Product
  */

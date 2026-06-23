@@ -80,7 +80,7 @@ class LandingController {
       await LandingModel.findByIdAndUpdate(
         id,
         { $set: data },
-        { new: true, runValidators: true }
+        { new: true, runValidators: true },
       );
 
       return res.status(HttpStatus.OK).json({

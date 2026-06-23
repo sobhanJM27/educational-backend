@@ -1,14 +1,15 @@
-const { default: mongoose } = require("mongoose");
-const { CommentSchema } = require("./public.model");
+const { default: mongoose } = require('mongoose');
+const { CommentSchema } = require('./public.model');
 
-const BooktSchema = new mongoose.Schema({
+const BooktSchema = new mongoose.Schema(
+  {
     title: { type: String, required: true },
-    urlTitle: { type: String},
+    urlTitle: { type: String },
     urlGoogle: { type: String, required: true },
     short_text: { type: String, required: true },
     text: { type: String, required: true },
     images: { type: [String], default: [] },
-    category: { type: mongoose.Types.ObjectId, ref: "category" },
+    category: { type: mongoose.Types.ObjectId, ref: 'category' },
     numberOfPages: { type: Number, required: true },
     yearOfPublication: { type: String, required: true },
     pricePhysical: { type: Number, default: 0 },
@@ -16,20 +17,20 @@ const BooktSchema = new mongoose.Schema({
     finalPricePhysical: { type: Number, default: 0 },
     finalPriceVirtual: { type: Number, default: 0 },
     discount: { type: Number, default: 0 },
-    comments: { type: [CommentSchema], ref: "user", default: [] },
+    comments: { type: [CommentSchema], ref: 'user', default: [] },
     sale: { type: Number, default: 0 },
     link: { type: String, default: '' },
-    item_type: { type: String, default: "book" },
-    numberLink: { type: Number, default: 0 }
-
-}, {
+    item_type: { type: String, default: 'book' },
+    numberLink: { type: Number, default: 0 },
+  },
+  {
     toJSON: {
-        virtuals: true
-    }
-
-})
-BooktSchema.index({ title: "text" })
+      virtuals: true,
+    },
+  },
+);
+BooktSchema.index({ title: 'text' });
 
 module.exports = {
-    BookModel: mongoose.model("book", BooktSchema)
-}
+  BookModel: mongoose.model('book', BooktSchema),
+};

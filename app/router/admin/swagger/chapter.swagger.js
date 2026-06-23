@@ -31,7 +31,7 @@
  *      schemas:
  *        EditChapter:
  *              type: object
- *              properties:   
+ *              properties:
  *                  title:
  *                      type: string
  *                      description: the title of chapter
@@ -61,7 +61,7 @@
  *                  application/x-www-form-urlencoded:
  *                      schema:
  *                          $ref: '#/components/schemas/AddChapter'
- *          
+ *
  *          responses:
  *              201:
  *                  description: created new course
@@ -69,7 +69,7 @@
  *                      application/json:
  *                          schema:
  *                              $ref: '#/definitions/publicDefinition'
- * 
+ *
  */
 /**
  * @swagger
@@ -96,7 +96,7 @@
  *                  description: success
  *                  content:
  *                      application/json:
- *                          schema: 
+ *                          schema:
  *                              $ref: '#/definitions/publicDefinition'
  */
 
@@ -116,6 +116,6 @@
  *                  description: success
  *                  content:
  *                      application/json:
- *                          schema: 
+ *                          schema:
  *                              $ref: '#/definitions/publicDefinition'
  */

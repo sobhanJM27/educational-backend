@@ -5,7 +5,7 @@
  *          AddCode:
  *              type: object
  *              required:
- *                  -   percent   
+ *                  -   percent
  *              properties:
  *                  percent:
  *                      type: string
@@ -18,7 +18,7 @@
  *          Check:
  *              type: object
  *              required:
- *                  -   code   
+ *                  -   code
  *              properties:
  *                  code:
  *                      type: string
@@ -39,7 +39,7 @@
  *
  *          responses:
  *              201:
- *                  description: created new Book    
+ *                  description: created new Book
  */
 /**
  * @swagger
@@ -54,7 +54,7 @@
  *                  description: objectId of code
  *          responses:
  *              201:
- *                  description: created new Book    
+ *                  description: created new Book
  */
 
 /**
@@ -72,7 +72,7 @@
  *
  *          responses:
  *              200:
- *                  description: created new Book    
+ *                  description: created new Book
  */
 
 /**
@@ -83,5 +83,5 @@
  *          summary: create and save discountCode
  *          responses:
  *              200:
- *                  description: created new Book    
+ *                  description: created new Book
  */

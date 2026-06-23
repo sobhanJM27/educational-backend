@@ -1,7 +1,7 @@
-const Controller = require("../controller");
-const { SitemapModel } = require("../../../model/sitemap.model");
-const createError = require("http-errors");
-const { StatusCodes } = require("http-status-codes");
+const Controller = require('../controller');
+const { SitemapModel } = require('../../../model/sitemap.model');
+const createError = require('http-errors');
+const { StatusCodes } = require('http-status-codes');
 
 class SitemapController extends Controller {
   async addUrl(req, res, next) {
@@ -16,7 +16,7 @@ class SitemapController extends Controller {
 
       return res.status(StatusCodes.CREATED).json({
         statusCode: StatusCodes.CREATED,
-        message: "لینک اضافه شد",
+        message: 'لینک اضافه شد',
         sitemap,
       });
     } catch (error) {
@@ -31,11 +31,11 @@ class SitemapController extends Controller {
       const result = await SitemapModel.deleteOne({ _id: id });
 
       if (result.deletedCount === 0)
-        throw createError.NotFound("لینک پیدا نشد");
+        throw createError.NotFound('لینک پیدا نشد');
 
       return res.status(StatusCodes.OK).json({
         statusCode: StatusCodes.OK,
-        message: "لینک حذف شد",
+        message: 'لینک حذف شد',
       });
     } catch (error) {
       next(error);

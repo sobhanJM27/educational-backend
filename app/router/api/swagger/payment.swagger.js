@@ -32,7 +32,7 @@
  *
  *          responses:
  *              201:
- *                  description: created new Book    
+ *                  description: created new Book
  */
 
 /**
@@ -48,7 +48,7 @@
  *                  required: true
  *          responses:
  *              201:
- *                  description: created new Book    
+ *                  description: created new Book
  */
 
 /**
@@ -59,5 +59,5 @@
  *          summary: create and save blog
  *          responses:
  *              201:
- *                  description: created new Book    
+ *                  description: created new Book
  */

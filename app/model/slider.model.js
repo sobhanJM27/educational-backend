@@ -1,12 +1,9 @@
 const mongoose = require('mongoose');
 
-
 const SliderSchema = new mongoose.Schema({
-
-    images: { type: [String], default: [] },
-
+  images: { type: [String], default: [] },
 });
 
 module.exports = {
-    SliderModel: mongoose.model("slider", SliderSchema)
-}
+  SliderModel: mongoose.model('slider', SliderSchema),
+};

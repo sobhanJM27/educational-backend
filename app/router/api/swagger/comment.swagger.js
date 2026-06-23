@@ -1,5 +1,3 @@
-
-
 /**
  * @swagger
  *  components:
@@ -36,7 +34,7 @@
  *                      type: string
  *                      description: the id of product
  *                      example: id product or course or blog
- *          
+ *
  */
 
 /**
@@ -92,7 +90,7 @@
  *
  *          responses:
  *              201:
- *                  description: created new Product    
+ *                  description: created new Product
  */
 /**
  * @swagger
@@ -109,7 +107,7 @@
  *
  *          responses:
  *              201:
- *                  description: created new Product    
+ *                  description: created new Product
  */
 /**
  * @swagger
@@ -125,7 +123,7 @@
  *                          $ref: '#/components/schemas/sendStatus'
  *          responses:
  *              201:
- *                  description: created new Product    
+ *                  description: created new Product
  */
 
 /**
@@ -142,7 +140,7 @@
  *                          $ref: '#/components/schemas/addComment'
  *          responses:
  *              201:
- *                  description: created new Product    
+ *                  description: created new Product
  */
 
 /**
@@ -159,5 +157,5 @@
  *                          $ref: '#/components/schemas/remove'
  *          responses:
  *              201:
- *                  description: created new Product    
+ *                  description: created new Product
  */
