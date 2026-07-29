@@ -51,8 +51,8 @@ class AuthController extends Controller {
         code,
         expiresIn: new Date().getTime() + 120000,
       };
-      this.savedidar(first_name, last_name, phone);
-      //this.savedidardeal()
+      // await this.savedidar(first_name, last_name, phone);
+      // await this.savedidardeal(first_name, last_name, phone);
 
       const creatUser = await UserModel.create({
         first_name,
@@ -223,41 +223,41 @@ class AuthController extends Controller {
         console.log(error);
       });
   }
-  // async savedidardeal() {
-  //     let data = JSON.stringify({
-  //         "Deal": {
-  //             "PersonId": "200a5df0-488d-4dae-81b3-b1dec904fa2b",
-  //             "CompanyId": "853F80AB-10A5-49E1-BD08-AFEC09E6054F",
-  //             "FirstName": first_name,
-  //             "LastName": last_name,
-  //             "MobilePhone": phone,
-  //             "Title": "معامله hdajhv",
-  //             "PipelineStageId": "b4a7c2a4-a0b4-4aa1-af40-bf5138b17a9d",
-  //             "OwnerId": "f677929c-0f9a-4570-8234-c5b6ac20b892",
-  //             "SegmentIds": [],
-  //             "VisibilityType": "OwnerGroup",
-  // },
+  async savedidardeal() {
+      let data = JSON.stringify({
+          "Deal": {
+              "PersonId": "200a5df0-488d-4dae-81b3-b1dec904fa2b",
+              "CompanyId": "853F80AB-10A5-49E1-BD08-AFEC09E6054F",
+              "FirstName": first_name,
+              "LastName": last_name,
+              "MobilePhone": phone,
+              "Title": "معامله hdajhv",
+              "PipelineStageId": "b4a7c2a4-a0b4-4aa1-af40-bf5138b17a9d",
+              "OwnerId": "f677929c-0f9a-4570-8234-c5b6ac20b892",
+              "SegmentIds": [],
+              "VisibilityType": "OwnerGroup",
+  },
 
-  //     })
-  //     var config  = {
-  //     method: 'POST',
-  //     maxBodyLength: Infinity,
-  //     url: 'localhost:4300/api/deal/save?apikey=t2eaeztl755nxumkpue7o8lwyuij7gc6',
-  //     headers: {
-  //         'Content-Type': 'application/json'
-  //     },
-  //     data: data
+      })
+      var config  = {
+      method: 'POST',
+      maxBodyLength: Infinity,
+      url: 'localhost:4300/api/deal/save?apikey=t2eaeztl755nxumkpue7o8lwyuij7gc6',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      data: data
 
-  //     };
-  //     axios(config)
-  //     .then(function (response) {
-  //     console.log(JSON.stringify(response.data));
-  //     })
-  //     .catch(function (error) {
-  //     console.log(error);
-  //     });
+      };
+      axios(config)
+      .then(function (response) {
+      console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+      console.log(error);
+      });
 
-  // }
+  }
 
   generateCode() {
     return Math.floor(Math.random() * 10000);

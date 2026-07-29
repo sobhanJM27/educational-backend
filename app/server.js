@@ -5,6 +5,7 @@ const { AllRoutes } = require('./router/router.routes');
 const cors = require('cors');
 const express = require('express');
 const { SitemapRouter } = require('./router/api/sitemap.router');
+const { RedirectMiddleware } = require("./http/middleware/redirect.middleware");
 
 module.exports = class Server {
   #app = express();
@@ -114,6 +115,8 @@ module.exports = class Server {
     });
   }
   createRouter() {
+    this.#app.use(RedirectMiddleware);
+
     this.#app.use('/sitemap.xml', SitemapRouter);
 
     this.#app.use(AllRoutes);
