@@ -1,2 +1,6 @@
-node_modules
-public
+# dependencies
+node_modules/
+
+# env
+.env
+.env.local
