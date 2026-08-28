@@ -38,15 +38,19 @@ Production-ready backend service featuring authentication, SMS verification, fil
 ## 🛠 Tech Stack
 
 ### Backend
+
 - Node.js, Express.js, MongoDB, Mongoose
 
 ### Security & Validation
+
 - JWT, bcryptjs, Joi, Express Validator
 
 ### Services
+
 - Melipayamak, SMS.ir, Multer, Swagger
 
 ### Utilities
+
 - Morgan, Dotenv, Axios
 
 ---

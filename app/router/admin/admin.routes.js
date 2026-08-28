@@ -15,7 +15,6 @@ const { AdminEventRouter } = require('./event.router');
 const { AdminSliderRouter } = require('./slider.router');
 const { AdminLandingRouter } = require('./landing.router');
 const { AdminSitemapRouter } = require('./sitemap.router');
-const { AdminRedirectRouter } = require('./redirect.routes');
 
 const router = require('express').Router();
 router.use('/image', verifyJWT, checkRole('ADMIN'), AdminImageRouter);
@@ -33,7 +32,6 @@ router.use('/event', AdminEventRouter);
 router.use('/slider', AdminSliderRouter);
 router.use('/landing', verifyJWT, checkRole('ADMIN'), AdminLandingRouter);
 router.use('/sitemap', AdminSitemapRouter);
-router.use("/redirect", AdminRedirectRouter);
 
 module.exports = {
   AdminRoute: router,
