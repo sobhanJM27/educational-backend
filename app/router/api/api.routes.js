@@ -11,7 +11,6 @@ const { FilterRouter } = require('./filter.router');
 const { paymentRouter } = require('./payment.router');
 const { userRouter } = require('./user.router');
 const { ApiLandingRouter } = require('./landing.router');
-const { ApiLeadsRouter } = require('./leads.router');
 
 const router = require('express').Router();
 router.use('/book', ApiBookRouter);
@@ -27,7 +26,6 @@ router.use('/payment', paymentRouter);
 router.use('/user', userRouter);
 router.use('/contact', ContactRouter);
 router.use('/landing', ApiLandingRouter);
-router.use('/leads', ApiLeadsRouter);
 
 module.exports = {
   ApiRoute: router,

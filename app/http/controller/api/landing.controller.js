@@ -14,7 +14,6 @@ class LandingController {
       next(error);
     }
   }
-  
 }
 
 module.exports = {

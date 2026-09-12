@@ -9,11 +9,11 @@ const { StatusCodes } = require('http-status-codes');
 const MelipayamakApi = require('melipayamak');
 
 var axios = require('axios');
-
+// app.didar.me/api/contact/save?apikey= badfc503-2033-4e84-9289-a25b6a792862
 const Controller = require('../controller');
 const request = require('request');
-const username = process.env.MELIPAYAMAK_USERNAME;
-const password = process.env.MELIPAYAMAK_PASSWORD;
+const username = '09307886969';
+const password = 'FL2$Q';
 const api = new MelipayamakApi(username, password);
 
 class AuthController extends Controller {
@@ -29,16 +29,17 @@ class AuthController extends Controller {
           .status(StatusCodes.OK)
           .json({ message: 'کاربر یافت شد', StatusCode: StatusCodes.OK });
       } else {
-        return res.status(StatusCodes.NOT_FOUND).json({
-          message: 'کاربر یافت نشد',
-          StatusCode: StatusCodes.NOT_FOUND,
-        });
+        return res
+          .status(StatusCodes.NOT_FOUND)
+          .json({
+            message: 'کاربر یافت نشد',
+            StatusCode: StatusCodes.NOT_FOUND,
+          });
       }
     } catch (error) {
       next(error);
     }
   }
-
   async register(req, res, next) {
     try {
       const { first_name, last_name, phone } = req.body;
@@ -61,6 +62,7 @@ class AuthController extends Controller {
       });
       if (!creatUser) throw createHttpError.InternalServerError('');
       this.sendSMS(phone, code);
+      this.saveRasadLead(first_name, last_name, phone);
       return res.status(StatusCodes.CREATED).json({
         StatusCode: StatusCodes.CREATED,
         message: 'شما با موفقیت ثبت نام شدید',
@@ -69,7 +71,6 @@ class AuthController extends Controller {
       next(error);
     }
   }
-
   async loginForOtp(req, res, next) {
     try {
       const { code, phone } = req.body;
@@ -81,11 +82,14 @@ class AuthController extends Controller {
       const token = await signJWT(findUser._id);
       const refreshTOken = await SignRefreshToken(findUser._id);
       await findUser.updateOne({ $set: { token } });
-      const adminPhones = process.env.ADMIN_PHONES.split(',');
-
-      if (adminPhones.includes(findUser.phone)) {
+      if (
+        findUser.phone == '09178116652' ||
+        findUser.phone == '09307886969' ||
+        findUser.phone == '09179300277' ||
+        findUser.phone == '09395356683' ||
+        findUser.phone == '09035134830'
+      ) {
         Role = 'ADMIN';
-
         await UserModel.updateOne(
           { _id: findUser._id },
           { $set: { role: 'ADMIN' } },
@@ -103,7 +107,6 @@ class AuthController extends Controller {
       next(error);
     }
   }
-
   async refreshToken(req, res, next) {
     try {
       const { refreshtoken } = req.body;
@@ -134,7 +137,6 @@ class AuthController extends Controller {
       next(error);
     }
   }
-
   async validtionCode(phone, code) {
     const findUser = await this.findUser(phone);
     if (!findUser) throw createHttpError.NotFound('کاربری یافت نشد');
@@ -143,12 +145,10 @@ class AuthController extends Controller {
     if (+code != +findUser.otp.code) return false;
     return true;
   }
-
   async findUser(phone) {
     const findUser = await UserModel.findOne({ phone });
     return findUser;
   }
-
   async refreshCode(req, res, next) {
     try {
       const { phone } = req.body;
@@ -161,19 +161,18 @@ class AuthController extends Controller {
       next(error);
     }
   }
-
   async sendSMS(phone, code) {
     try {
-      const username = process.env.MELIPAYAMAK_USERNAME;
-      const password = process.env.MELIPAYAMAK_PASSWORD;
+      const username = '09307886969';
+      const password = 'FL2$Q';
       const api = new MelipayamakApi(username, password);
       const smsRest = api.sms();
       const to = '' + phone;
-      // const from = '50004001886969';
+      const from = '50004001886969';
       const text = `${code}`;
       //const bodyid = "کد ورود یکبار مصرف شما {0} میباشد"
       smsRest
-        .sendByBaseNumber(text, to, process.env.MELIPAYAMAK_OTP_BODY_ID)
+        .sendByBaseNumber(text, to, 175205)
         .then((e) => {
           console.log(e);
         })
@@ -184,24 +183,50 @@ class AuthController extends Controller {
       next(error);
     }
   }
-
+  async saveRasadLead(first_name, last_name, phone) {
+    try {
+      const rasadLeadApiUrl = process.env.RASAD_LEAD_API_URL;
+      const rasadLeadApiKey = process.env.RASAD_LEAD_API_KEY;
+      if (!rasadLeadApiUrl || !rasadLeadApiKey) return;
+      await axios.post(
+        rasadLeadApiUrl,
+        {
+          FirstName: first_name || phone,
+          last_name: last_name || '-',
+          PhoneNumber: phone,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${rasadLeadApiKey}`,
+            'Content-Type': 'application/json',
+          },
+          timeout: 5000,
+        },
+      );
+    } catch (error) {
+      console.log(
+        'rasad lead sync error',
+        (error && error.response && error.response.status) || error.message,
+      );
+    }
+  }
   async savedidar(first_name, last_name, phone) {
     let data = JSON.stringify({
       Contact: {
         FirstName: first_name,
         LastName: last_name,
         MobilePhone: phone,
-        ProvinceId: process.env.DIDAR_PROVINCE_ID,
-        CityId: process.env.DIDAR_CITY_ID,
+        ProvinceId: 'c990e86b-a13a-40f4-b21d-79bf09e6e579',
+        CityId: '00000000-0000-0000-0000-000000000000',
         Fields: {
           Field_996_12_8: 'Test',
           Field_996_12_9: 'Test',
         },
         Segments: [
           {
-            Id: process.env.DIDAR_SEGMENT_ID,
+            Id: '0acb04ef-3d20-4b05-872f-0233da4fabd7',
             Title: 'ثبت نام در سایت',
-            ParentId: process.env.DIDAR_SEGMENT_PARENT_ID,
+            ParentId: '34a77bbd-7fc2-4f46-a2d7-4d5f2f644a1e',
             ParentTitle: 'سایت',
             BackgroundColor: '#1eff00',
             FullTitle: 'سایت / ثبت نام در سایت',
@@ -212,7 +237,7 @@ class AuthController extends Controller {
     var config = {
       method: 'POST',
       maxBodyLength: Infinity,
-      url: `https://app.didar.me/api/contact/save?ApiKey=${process.env.DIDAR_REGISTER_API_KEY}`,
+      url: 'https://app.didar.me/api/contact/save?ApiKey=73hhtymnab402euorpo08309if5eeob2',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -226,38 +251,40 @@ class AuthController extends Controller {
         console.log(error);
       });
   }
-
   async savedidardeal() {
-    let data = JSON.stringify({
-      Deal: {
-        PersonId: process.env.DIDAR_PERSON_ID,
-        CompanyId: process.env.DIDAR_COMPANY_ID,
-        FirstName: first_name,
-        LastName: last_name,
-        MobilePhone: phone,
-        Title: 'معامله hdajhv',
-        PipelineStageId: process.env.DIDAR_PIPELINE_STAGE_ID,
-        OwnerId: process.env.DIDAR_OWNER_ID,
-        SegmentIds: [],
-        VisibilityType: 'OwnerGroup',
-      },
-    });
-    var config = {
+      let data = JSON.stringify({
+          "Deal": {
+              "PersonId": "200a5df0-488d-4dae-81b3-b1dec904fa2b",
+              "CompanyId": "853F80AB-10A5-49E1-BD08-AFEC09E6054F",
+              "FirstName": first_name,
+              "LastName": last_name,
+              "MobilePhone": phone,
+              "Title": "معامله hdajhv",
+              "PipelineStageId": "b4a7c2a4-a0b4-4aa1-af40-bf5138b17a9d",
+              "OwnerId": "f677929c-0f9a-4570-8234-c5b6ac20b892",
+              "SegmentIds": [],
+              "VisibilityType": "OwnerGroup",
+  },
+
+      })
+      var config  = {
       method: 'POST',
       maxBodyLength: Infinity,
-      url: `localhost:4300/api/deal/save?apikey=${DIDAR_API_KEY}`,
+      url: 'localhost:4300/api/deal/save?apikey=t2eaeztl755nxumkpue7o8lwyuij7gc6',
       headers: {
-        'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
       },
-      data: data,
-    };
-    axios(config)
+      data: data
+
+      };
+      axios(config)
       .then(function (response) {
-        console.log(JSON.stringify(response.data));
+      console.log(JSON.stringify(response.data));
       })
       .catch(function (error) {
-        console.log(error);
+      console.log(error);
       });
+
   }
 
   generateCode() {

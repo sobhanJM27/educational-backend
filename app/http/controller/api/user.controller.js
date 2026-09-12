@@ -117,7 +117,6 @@ class UserController extends Controller {
       next(error);
     }
   }
-  
   async getEducationalVideoPurchasedOnline(req, res, next) {
     try {
       const user = req.user;
@@ -145,7 +144,6 @@ class UserController extends Controller {
       next(error);
     }
   }
-
   async getEducationalVideoPurchasedOfline(req, res, next) {
     try {
       const user = req.user;
@@ -173,7 +171,6 @@ class UserController extends Controller {
       next(error);
     }
   }
-
   async getEducationalVideoPurchasedInPerson(req, res, next) {
     try {
       const user = req.user;
@@ -203,7 +200,6 @@ class UserController extends Controller {
       next(error);
     }
   }
-
   async getBooktPurchased(req, res, next) {
     try {
       const user = req.user;
@@ -226,7 +222,6 @@ class UserController extends Controller {
       next(error);
     }
   }
-
   async limit(model, limit, property, next) {
     try {
       let products = [];
@@ -350,7 +345,6 @@ class UserController extends Controller {
       next(error);
     }
   }
-
   async getAllUser(req, res, next) {
     try {
       const result = await UserModel.find(
