@@ -1,9 +1,11 @@
-const { LeadsController } = require('../../http/controller/api/leads.controller');
+const {
+  ConsultingLeadController,
+} = require('../../http/controller/api/leads.controller');
 
 const router = require('express').Router();
 
-router.post('/consulting-lead', LeadsController.createConsultingLead);
+router.post('/consulting-lead', ConsultingLeadController.addConsultingLead);
 
 module.exports = {
-    ApiLeadsRouter: router,
-}
+  ApiConsultingLeadRouter: router,
+};

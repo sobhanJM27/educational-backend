@@ -62,7 +62,7 @@ class AuthController extends Controller {
       });
       if (!creatUser) throw createHttpError.InternalServerError('');
       this.sendSMS(phone, code);
-      this.saveRasadLead(first_name, last_name, phone);
+      await this.saveRasadLead(first_name, last_name, phone);
       return res.status(StatusCodes.CREATED).json({
         StatusCode: StatusCodes.CREATED,
         message: 'شما با موفقیت ثبت نام شدید',
