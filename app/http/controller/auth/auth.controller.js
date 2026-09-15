@@ -185,9 +185,19 @@ class AuthController extends Controller {
   }
   async saveRasadLead(first_name, last_name, phone) {
     try {
-      const rasadLeadApiUrl = process.env.RASAD_LEAD_API_URL;
-      const rasadLeadApiKey = process.env.RASAD_LEAD_API_KEY;
-      if (!rasadLeadApiUrl || !rasadLeadApiKey) return;
+      const rasadWorkspace = process.env.MYRASAD_WORKSPACE || 'akademizarei';
+      const rasadFormId = process.env.MYRASAD_FORM_ID || '8';
+      const rasadLeadApiUrl =
+        process.env.RASAD_LEAD_API_URL ||
+        `https://myrasad.com/api/public/forms/${rasadWorkspace}/${rasadFormId}/leads`;
+      const rasadLeadApiKey =
+        process.env.RASAD_LEAD_API_KEY || process.env.MYRASAD_API_KEY;
+
+      if (!rasadLeadApiKey) {
+        console.log('rasad lead sync skipped: missing API key env');
+        return;
+      }
+
       await axios.post(
         rasadLeadApiUrl,
         {
