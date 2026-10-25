@@ -2,11 +2,18 @@ const { StatusCodes: HttpStatus } = require('http-status-codes');
 const axios = require('axios');
 
 class ConsultingLeadController {
+  constructor() {
+    this.addConsultingLead = this.addConsultingLead.bind(this);
+  }
+
   async saveRasadLead(first_name, last_name, phone) {
     try {
-      const rasadLeadApiUrl = process.env.RASAD_LEAD_API_URL;
-      const rasadLeadApiKey = process.env.RASAD_LEAD_API_KEY;
-      if (!rasadLeadApiUrl || !rasadLeadApiKey) return;
+      const rasadLeadApiUrl =
+        process.env.RASAD_CONSULTING_LEAD_API_URL ||
+        'https://myrasad.com/api/public/forms/akademizarei/3/leads';
+      const rasadLeadApiKey =
+        process.env.RASAD_CONSULTING_LEAD_API_KEY || 'rasad_form_SS_AZUu';
+
       await axios.post(
         rasadLeadApiUrl,
         {
@@ -24,7 +31,7 @@ class ConsultingLeadController {
       );
     } catch (error) {
       console.log(
-        'rasad lead sync error',
+        'rasad lead sync error (consulting)',
         (error && error.response && error.response.status) || error.message,
       );
     }

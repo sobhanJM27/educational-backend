@@ -29,12 +29,10 @@ class AuthController extends Controller {
           .status(StatusCodes.OK)
           .json({ message: 'کاربر یافت شد', StatusCode: StatusCodes.OK });
       } else {
-        return res
-          .status(StatusCodes.NOT_FOUND)
-          .json({
-            message: 'کاربر یافت نشد',
-            StatusCode: StatusCodes.NOT_FOUND,
-          });
+        return res.status(StatusCodes.NOT_FOUND).json({
+          message: 'کاربر یافت نشد',
+          StatusCode: StatusCodes.NOT_FOUND,
+        });
       }
     } catch (error) {
       next(error);
@@ -183,20 +181,14 @@ class AuthController extends Controller {
       next(error);
     }
   }
+
   async saveRasadLead(first_name, last_name, phone) {
     try {
-      const rasadWorkspace = process.env.MYRASAD_WORKSPACE || 'akademizarei';
-      const rasadFormId = process.env.MYRASAD_FORM_ID || '8';
       const rasadLeadApiUrl =
-        process.env.RASAD_LEAD_API_URL ||
-        `https://myrasad.com/api/public/forms/${rasadWorkspace}/${rasadFormId}/leads`;
+        process.env.RASAD_AUTH_LEAD_API_URL ||
+        'https://myrasad.com/api/public/forms/akademizarei/8/leads';
       const rasadLeadApiKey =
-        process.env.RASAD_LEAD_API_KEY || process.env.MYRASAD_API_KEY;
-
-      if (!rasadLeadApiKey) {
-        console.log('rasad lead sync skipped: missing API key env');
-        return;
-      }
+        process.env.RASAD_AUTH_LEAD_API_KEY || 'rasad_form_pae1XIZf0KYRhGbaRbAp_IbdvdRIgBe3JN08rYzD5QI';
 
       await axios.post(
         rasadLeadApiUrl,
@@ -215,11 +207,12 @@ class AuthController extends Controller {
       );
     } catch (error) {
       console.log(
-        'rasad lead sync error',
+        'rasad lead sync error (auth)',
         (error && error.response && error.response.status) || error.message,
       );
     }
   }
+
   async savedidar(first_name, last_name, phone) {
     let data = JSON.stringify({
       Contact: {
@@ -262,39 +255,36 @@ class AuthController extends Controller {
       });
   }
   async savedidardeal() {
-      let data = JSON.stringify({
-          "Deal": {
-              "PersonId": "200a5df0-488d-4dae-81b3-b1dec904fa2b",
-              "CompanyId": "853F80AB-10A5-49E1-BD08-AFEC09E6054F",
-              "FirstName": first_name,
-              "LastName": last_name,
-              "MobilePhone": phone,
-              "Title": "معامله hdajhv",
-              "PipelineStageId": "b4a7c2a4-a0b4-4aa1-af40-bf5138b17a9d",
-              "OwnerId": "f677929c-0f9a-4570-8234-c5b6ac20b892",
-              "SegmentIds": [],
-              "VisibilityType": "OwnerGroup",
-  },
-
-      })
-      var config  = {
+    let data = JSON.stringify({
+      Deal: {
+        PersonId: '200a5df0-488d-4dae-81b3-b1dec904fa2b',
+        CompanyId: '853F80AB-10A5-49E1-BD08-AFEC09E6054F',
+        FirstName: first_name,
+        LastName: last_name,
+        MobilePhone: phone,
+        Title: 'معامله hdajhv',
+        PipelineStageId: 'b4a7c2a4-a0b4-4aa1-af40-bf5138b17a9d',
+        OwnerId: 'f677929c-0f9a-4570-8234-c5b6ac20b892',
+        SegmentIds: [],
+        VisibilityType: 'OwnerGroup',
+      },
+    });
+    var config = {
       method: 'POST',
       maxBodyLength: Infinity,
       url: 'localhost:4300/api/deal/save?apikey=t2eaeztl755nxumkpue7o8lwyuij7gc6',
       headers: {
-          'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      data: data
-
-      };
-      axios(config)
+      data: data,
+    };
+    axios(config)
       .then(function (response) {
-      console.log(JSON.stringify(response.data));
+        console.log(JSON.stringify(response.data));
       })
       .catch(function (error) {
-      console.log(error);
+        console.log(error);
       });
-
   }
 
   generateCode() {
